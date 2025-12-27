@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Thai Cuisine - อาหารไทยระดับพรีเมียม</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #0a0a0a;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(218, 165, 32, 0.2));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #DAA520, #FFD700, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(218, 165, 32, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            color: #DAA520;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+            animation: fadeIn 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(218, 165, 32, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(218, 165, 32, 0.6);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .dish-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(218, 165, 32, 0.3);
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .dish-card:hover .dish-image {
+            transform: scale(1.1);
+        }
+
+        .dish-info {
+            padding: 2rem;
+        }
+
+        .dish-name {
+            font-size: 1.8rem;
+            color: #DAA520;
+            margin-bottom: 0.5rem;
+        }
+
+        .dish-description {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .dish-price {
+            font-size: 1.5rem;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .video-section {
+            position: relative;
+            margin: 4rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border-radius: 15px;
+            transition: all 0.4s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(218, 165, 32, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: #DAA520;
+            margin-bottom: 1rem;
+        }
+
+        .feature-text {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #000;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 2px solid #DAA520;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #000;
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .dishes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="logo floating">Royal Thai</h1>
+            <p class="tagline">อาหารไทยต้นตำรับ ระดับพรีเมียม</p>
+            <a href="#menu" class="cta-button">สำรวจเมนู</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section" id="menu">
+        <h2 class="section-title">เมนูพิเศษของเรา</h2>
+        <div class="dishes-grid">
+            <div class="dish-card">
+                <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80" alt="ต้มยำกุ้ง"
+                    class="dish-image">
+                <div class="dish-info">
+                    <h3 class="dish-name">ต้มยำกุ้งน้ำข้น</h3>
+                    <p class="dish-description">กุ้งแม่น้ำสดใหม่ เครื่องแท้ สูตรต้นตำรับ รสชาติเข้มข้น
+                        หอมกลิ่นตะไคร้และใบมะกรูด</p>
+                    <p class="dish-price">฿850</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=800&q=80" alt="แกงเขียวหวาน"
+                    class="dish-image">
+                <div class="dish-info">
+                    <h3 class="dish-name">แกงเขียวหวานไก่</h3>
+                    <p class="dish-description">พริกแกงสูตรโบราณ เนื้อไก่นุ่ม ผักสดกรอบ กะทิหอมมัน รสชาติกลมกล่อม</p>
+                    <p class="dish-price">฿650</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=800&q=80" alt="ผัดไทย"
+                    class="dish-image">
+                <div class="dish-info">
+                    <h3 class="dish-name">ผัดไทยกุ้งสด</h3>
+                    <p class="dish-description">เส้นจันท์แท้ กุ้งแม่น้ำขนาดใหญ่ น้ำผัดไทยสูตรเฉพาะ หอมกลิ่นกุ้งเสียบ</p>
+                    <p class="dish-price">฿550</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="https://images.unsplash.com/photo-1604908815927-4ef7c8e09f2b?w=800&q=80" alt="ข้าวผัด"
+                    class="dish-image">
+                <div class="dish-info">
+                    <h3 class="dish-name">ข้าวผัดปูอลาสก้า</h3>
+                    <p class="dish-description">เนื้อปูอลาสก้าแท้ ข้าวหอมมะลิ ผัดด้วยน้ำมันงา หอมกลิ่นปูและเครื่องเทศ
+                    </p>
+                    <p class="dish-price">฿1,200</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="https://images.unsplash.com/photo-1569562211093-4ed0d0758f12?w=800&q=80" alt="ส้มตำ"
+                    class="dish-image">
+                <div class="dish-info">
+                    <h3 class="dish-name">ส้มตำปูม้า</h3>
+                    <p class="dish-description">มะละกอสด ปูม้าใหญ่ กุ้งสด เครื่องเคียงครบ รสชาติจัดจ้าน ต้นตำรับอีสาน
+                    </p>
+                    <p class="dish-price">฿750</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=800&q=80" alt="แกงมัสมั่น"
+                    class="dish-image">
+                <div class="dish-info">
+                    <h3 class="dish-name">แกงมัสมั่นเนื้อวากิว</h3>
+                    <p class="dish-description">เนื้อวากิวนุ่ม พริกแกงสูตรโบราณ มันฝรั่ง ถั่วลิสง กะทิหอม รสชาติเข้มข้น
+                    </p>
+                    <p class="dish-price">฿1,500</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <div class="video-section">
+            <div class="video-container">
+                <video controls poster="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80">
+                    <source
+                        src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                        type="video/mp4">
+                    เบราว์เซอร์ของคุณไม่รองรับวิดีโอ
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">ทำไมต้องเลือกเรา</h2>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🌟</div>
+                <h3 class="feature-title">วัตถุดิบพรีเมียม</h3>
+                <p class="feature-text">คัดสรรวัตถุดิบคุณภาพสูงสุด สดใหม่ทุกวัน</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👨‍🍳</div>
+                <h3 class="feature-title">เชฟมืออาชีพ</h3>
+                <p class="feature-text">ประสบการณ์กว่า 20 ปี ในการปรุงอาหารไทย</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">รางวัลมากมาย</h3>
+                <p class="feature-text">ได้รับการยอมรับจากนักชิมทั่วโลก</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚚</div>
+                <h3 class="feature-title">จัดส่งถึงบ้าน</h3>
+                <p class="feature-text">บริการจัดส่งด่วน รักษาคุณภาพอาหาร</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3 class="logo" style="font-size: 2rem;">Royal Thai</h3>
+            <div class="social-links">
+                <a href="#" title="Facebook">f</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="Line">L</a>
+                <a href="#" title="Twitter">🐦</a>
+            </div>
+            <p style="color: #b0b0b0;">📞 02-XXX-XXXX | 📧 info@royalthai.com</p>
+            <p style="color: #666; margin-top: 1rem;">© 2024 Royal Thai. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.dish-card, .feature').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroVideo = document.querySelector('.hero-video');
+            if (heroVideo) {
+                heroVideo.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+
+</html>

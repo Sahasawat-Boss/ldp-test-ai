@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สยาม — Modern Thai Excellence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --text: #e8e8e8;
+            --accent: #c9a961;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        .cursor-follower {
+            width: 300px;
+            height: 300px;
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            mix-blend-mode: screen;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            color: #fff;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            margin-left: 3rem;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 0.6;
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            filter: grayscale(100%) brightness(0.3);
+            object-fit: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 200;
+            letter-spacing: 0.05em;
+            color: #fff;
+            line-height: 0.9;
+            opacity: 0;
+            animation: heroFade 2s ease-out 0.5s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            letter-spacing: 0.4em;
+            margin-top: 2rem;
+            color: var(--accent);
+            opacity: 0;
+            animation: heroFade 2s ease-out 1s forwards;
+        }
+
+        @keyframes heroFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+        }
+
+        .scroll-text {
+            position: absolute;
+            bottom: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            writing-mode: vertical-rl;
+            letter-spacing: 0.3em;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .spacer {
+            height: 30vh;
+        }
+
+        .section {
+            padding: 10vh 5%;
+            position: relative;
+        }
+
+        .section-number {
+            position: absolute;
+            top: 10vh;
+            right: 5%;
+            font-size: 10rem;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.03);
+            line-height: 1;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--accent);
+            margin-bottom: 4rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2px;
+            background: var(--border);
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .dish-item {
+            grid-column: span 6;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .dish-item:hover .dish-image {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(80%) contrast(1.1);
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dish-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        .dish-item:hover .dish-overlay {
+            opacity: 1;
+        }
+
+        .dish-name {
+            font-size: 2rem;
+            font-weight: 200;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .dish-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.05em;
+            line-height: 1.6;
+        }
+
+        .dish-price {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        .large {
+            grid-column: span 12;
+            aspect-ratio: 2.5;
+        }
+
+        .video-section {
+            margin: 20vh 5%;
+            position: relative;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .video-text {
+            padding-right: 4rem;
+        }
+
+        .video-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 200;
+            line-height: 1.2;
+            margin-bottom: 3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .video-paragraph {
+            font-size: 1rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .video-wrapper {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(50%);
+            transition: filter 0.6s;
+        }
+
+        .video-wrapper:hover video {
+            filter: grayscale(0%);
+        }
+
+        .philosophy {
+            text-align: center;
+            padding: 20vh 10%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .philosophy-text {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 200;
+            line-height: 1.8;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            padding: 15vh 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 100;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .cta {
+            text-align: center;
+            padding: 20vh 5%;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.3em;
+            font-size: 0.7rem;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(201, 169, 97, 0.1);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cta-button:hover:before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .footer {
+            padding: 5rem 5%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .dish-item {
+                grid-column: span 12;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .video-text {
+                padding-right: 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .nav-link {
+                margin-left: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-number {
+                font-size: 5rem;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor-follower"></div>
+
+    <nav class="nav">
+        <div class="nav-logo">สยาม</div>
+        <div>
+            <a href="#menu" class="nav-link">MENU</a>
+            <a href="#craft" class="nav-link">CRAFT</a>
+            <a href="#reserve" class="nav-link">RESERVE</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title">สยาม</h1>
+            <p class="hero-subtitle">CONTEMPORARY THAI CUISINE</p>
+        </div>
+        <div class="scroll-text">SCROLL</div>
+    </section>
+
+    <div class="spacer"></div>
+
+    <section class="section" id="menu">
+        <div class="section-number">01</div>
+        <div class="section-label">SIGNATURE DISHES</div>
+
+        <div class="grid">
+            <div class="dish-item">
+                <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?w=1200&q=80" class="dish-image"
+                    alt="">
+                <div class="dish-overlay">
+                    <div class="dish-price">850฿</div>
+                    <div class="dish-name">TOM YUM GOONG</div>
+                    <div class="dish-desc">River prawns · Lemongrass · Galangal · Kaffir lime</div>
+                </div>
+            </div>
+
+            <div class="dish-item">
+                <img src="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=1200&q=80" class="dish-image"
+                    alt="">
+                <div class="dish-overlay">
+                    <div class="dish-price">650฿</div>
+                    <div class="dish-name">GAENG KEOW WAN</div>
+                    <div class="dish-desc">Green curry · Coconut cream · Thai basil</div>
+                </div>
+            </div>
+
+            <div class="dish-item large">
+                <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=1600&q=80" class="dish-image"
+                    alt="">
+                <div class="dish-overlay">
+                    <div class="dish-price">550฿</div>
+                    <div class="dish-name">PAD THAI</div>
+                    <div class="dish-desc">Rice noodles · Jumbo prawns · Tamarind · Crushed peanuts</div>
+                </div>
+            </div>
+
+            <div class="dish-item">
+                <img src="https://images.unsplash.com/photo-1604908815927-4ef7c8e09f2b?w=1200&q=80" class="dish-image"
+                    alt="">
+                <div class="dish-overlay">
+                    <div class="dish-price">1,200฿</div>
+                    <div class="dish-name">KHAO PAD POO</div>
+                    <div class="dish-desc">Alaskan king crab · Jasmine rice · Sesame oil</div>
+                </div>
+            </div>
+
+            <div class="dish-item">
+                <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=1200&q=80" class="dish-image"
+                    alt="">
+                <div class="dish-overlay">
+                    <div class="dish-price">1,500฿</div>
+                    <div class="dish-name">MASSAMAN NEUA</div>
+                    <div class="dish-desc">Wagyu beef · Ancient spices · Roasted peanuts</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="video-section" id="craft">
+        <div class="video-grid">
+            <div class="video-text">
+                <h2 class="video-title">Crafted with intention</h2>
+                <p class="video-paragraph">Every morning, we source the finest ingredients from trusted farmers and
+                    fishermen. Each element is chosen for its quality, its story, and its ability to elevate the dish.
+                </p>
+                <p class="video-paragraph">Our kitchen is a space of precision and passion, where traditional techniques
+                    meet contemporary innovation. We don't just cook—we craft experiences.</p>
+            </div>
+            <div class="video-wrapper">
+                <video controls>
+                    <source
+                        src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                        type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section class="philosophy">
+        <p class="philosophy-text">
+            "We believe that great food begins with respect—respect for ingredients, for tradition, and for the craft.
+            Each dish tells a story of Thailand's culinary heritage, reimagined for the modern palate."
+        </p>
+    </section>
+
+    <section class="stats">
+        <div class="stat-item">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">YEARS EXPERIENCE</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">FRESH DAILY</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">5★</div>
+            <div class="stat-label">MICHELIN RATED</div>
+        </div>
+    </section>
+
+    <section class="cta" id="reserve">
+        <a href="#" class="cta-button">RESERVE YOUR TABLE</a>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-text">สยาม — BANGKOK</div>
+        <div class="footer-text">02-XXX-XXXX · HELLO@SIAM.TH</div>
+        <div class="footer-text">© 2024</div>
+    </footer>
+
+    <script>
+        // Custom cursor follower
+        const cursorFollower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            const dx = mouseX - followerX;
+            const dy = mouseY - followerY;
+
+            followerX += dx * 0.1;
+            followerY += dy * 0.1;
+
+            cursorFollower.style.left = followerX + 'px';
+            cursorFollower.style.top = followerY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover effect on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .dish-item');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorFollower.style.width = '150px';
+                cursorFollower.style.height = '150px';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorFollower.style.width = '300px';
+                cursorFollower.style.height = '300px';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const hero = document.querySelector('.hero-video');
+
+                    if (hero && scrolled < window.innerHeight) {
+                        hero.style.transform = `translate(-50%, -50%) scale(${1 + scrolled * 0.0003})`;
+                    }
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Reveal animations
+        const revealElements = document.querySelectorAll('.dish-item, .stat-item, .video-grid');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(60px)';
+            el.style.transition = 'all 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+
+</html>

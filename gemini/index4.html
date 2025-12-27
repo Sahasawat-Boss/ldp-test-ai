@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="th">
+<!-- Avant-Garde Minimalism -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHAM | The Silent Luxury</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@100;200;400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --text: #e5e5e5;
+            --accent: #6d6d6d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+            /* ซ่อน Cursor จริงเพื่อใช้ Custom Cursor */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0f0f0f 100%);
+        }
+
+        /* --- Custom Cursor --- */
+        #cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease;
+        }
+
+        .cursor-hover {
+            transform: scale(8);
+            mix-blend-mode: difference;
+        }
+
+        /* --- Global Elements --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 500;
+        }
+
+        .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+            font-style: italic;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .main-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15vw;
+            line-height: 0.8;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0.1;
+            position: absolute;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .video-container {
+            width: 400px;
+            height: 550px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            filter: sepia(20%) contrast(1.1);
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .video-container:hover {
+            width: 450px;
+            filter: sepia(0%) contrast(1);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- Horizontal Showroom --- */
+        .scroll-wrapper {
+            display: flex;
+            padding: 100px 0;
+            width: fit-content;
+        }
+
+        .menu-card {
+            width: 80vw;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10vw;
+            position: relative;
+        }
+
+        .card-inner {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .dish-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: 1.5s;
+        }
+
+        .card-inner:hover img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .dish-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .dish-info p {
+            font-weight: 100;
+            color: var(--accent);
+            max-width: 400px;
+            line-height: 1.8;
+        }
+
+        /* --- Footer Visual --- */
+        .closing {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-big {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            text-decoration: none;
+            color: var(--text);
+            border-bottom: 1px solid var(--text);
+            padding-bottom: 10px;
+            transition: 0.5s;
+        }
+
+        .cta-big:hover {
+            color: #888;
+            border-bottom-color: transparent;
+        }
+
+        /* --- Overlay Loading --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 1s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            #cursor {
+                display: none;
+            }
+
+            * {
+                cursor: auto;
+            }
+
+            .card-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .video-container {
+                width: 300px;
+                height: 400px;
+            }
+
+            .dish-info h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="brand">KHAM</div>
+    </div>
+
+    <div id="cursor"></div>
+
+    <nav>
+        <div class="brand">KHAM</div>
+        <div class="nav-links" style="font-size: 0.7rem; letter-spacing: 3px; font-weight: 200;">
+            <span class="hover-target">TASTE</span> &nbsp; / &nbsp;
+            <span class="hover-target">SPACE</span> &nbsp; / &nbsp;
+            <span class="hover-target">RESERVE</span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="main-title">AUTHENTIC PURITY</div>
+        <div class="video-container hover-target">
+            <video autoplay muted loop playsinline>
+                <source
+                    src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                    type="video/mp4">
+            </video>
+        </div>
+        <div style="position: absolute; bottom: 50px; font-size: 0.6rem; letter-spacing: 5px; opacity: 0.5;">SCROLL TO
+            EXPERIENCE</div>
+    </section>
+
+    <div class="scroll-wrapper">
+        <section class="menu-card">
+            <div class="card-inner">
+                <div class="dish-image hover-target">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=1000&q=80"
+                        alt="Dish">
+                </div>
+                <div class="dish-info">
+                    <span style="font-size: 0.7rem; letter-spacing: 2px;">01. NOBLE INGREDIENTS</span>
+                    <h2>Smoked Scallops</h2>
+                    <p>หอยเชลล์จากทะเลอันดามัน รมควันด้วยไม้หอมไทยโบราณ เสิร์ฟพร้อมซอสสมุนไพรสกัดเย็น</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu-card">
+            <div class="card-inner">
+                <div class="dish-image hover-target">
+                    <img src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=1000&q=80"
+                        alt="Dish">
+                </div>
+                <div class="dish-info">
+                    <span style="font-size: 0.7rem; letter-spacing: 2px;">02. ANCIENT TECHNIQUE</span>
+                    <h2>Wild Curry</h2>
+                    <p>แกงป่าปลาคังน้ำลึก ตำเครื่องแกงสดด้วยครกหินทุกเช้า เพื่อรักษากลิ่นและรสสัมผัสที่บริสุทธิ์ที่สุด
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="closing">
+        <p style="margin-bottom: 20px; font-weight: 200; letter-spacing: 3px;">FEEL THE SILENCE</p>
+        <a href="#" class="cta-big hover-target">Book Table</a>
+    </section>
+
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const targets = document.querySelectorAll('.hover-target');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        targets.forEach(target => {
+            target.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            target.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // Horizontal Scroll Logic
+        window.addEventListener('scroll', () => {
+            const scrollWrapper = document.querySelector('.scroll-wrapper');
+            const scrollAmount = window.scrollY;
+            // สร้างเอฟเฟกต์เลื่อนข้างเมื่อ Scroll ลง
+            if (window.innerWidth > 768) {
+                scrollWrapper.style.transform = `translateX(-${scrollAmount}px)`;
+                // Parallax Title
+                document.querySelector('.main-title').style.transform = `translateX(${scrollAmount * 0.5}px)`;
+            }
+        });
+
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 1000);
+            }, 1500);
+        });
+    </script>
+</body>
+
+</html>

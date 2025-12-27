@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARAYA - Contemporary Thai Cuisine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #1a1a1a;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) grayscale(20%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 200;
+            letter-spacing: 15px;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-out 0.3s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-out 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: #fff;
+            opacity: 0.5;
+            animation: scrollDown 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDown {
+
+            0%,
+            100% {
+                height: 60px;
+            }
+
+            50% {
+                height: 30px;
+            }
+        }
+
+        .section {
+            padding: 8rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 200;
+            letter-spacing: 8px;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #999;
+            letter-spacing: 2px;
+        }
+
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dish-card {
+            background: #fff;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.6s ease;
+        }
+
+        .dish-card:hover {
+            transform: scale(0.98);
+        }
+
+        .dish-image-wrapper {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            filter: grayscale(20%);
+        }
+
+        .dish-card:hover .dish-image {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .dish-info {
+            padding: 3rem;
+        }
+
+        .dish-name {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .dish-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .dish-price {
+            font-size: 1.3rem;
+            color: #1a1a1a;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .video-showcase {
+            margin: 8rem 0;
+            background: #fff;
+            padding: 6rem 4rem;
+        }
+
+        .video-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .video-text h2 {
+            font-size: 2.5rem;
+            font-weight: 200;
+            letter-spacing: 5px;
+            margin-bottom: 2rem;
+        }
+
+        .video-text p {
+            color: #666;
+            line-height: 2;
+            margin-bottom: 1rem;
+        }
+
+        .video-container {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        .philosophy {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 8rem 4rem;
+            text-align: center;
+        }
+
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .philosophy h2 {
+            font-size: 2.5rem;
+            font-weight: 200;
+            letter-spacing: 8px;
+            margin-bottom: 3rem;
+        }
+
+        .philosophy p {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            margin-top: 5rem;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-number {
+            font-size: 3rem;
+            font-weight: 200;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .cta-section {
+            padding: 8rem 4rem;
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 4rem;
+            border: 1px solid #1a1a1a;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            transition: all 0.4s ease;
+        }
+
+        .cta-button:hover {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .footer {
+            background: #fff;
+            padding: 4rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+        }
+
+        .footer-contact {
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 1024px) {
+            .nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-menu {
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .section {
+                padding: 5rem 2rem;
+            }
+
+            .dishes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: 8px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .dish-info {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">ARAYA</div>
+        <ul class="nav-menu">
+            <li><a href="#menu">MENU</a></li>
+            <li><a href="#story">STORY</a></li>
+            <li><a href="#reserve">RESERVE</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title">ARAYA</h1>
+            <p class="hero-subtitle">CONTEMPORARY THAI CUISINE</p>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section" id="menu">
+        <div class="section-header">
+            <h2 class="section-title">SIGNATURE</h2>
+            <p class="section-subtitle">A CURATED SELECTION</p>
+        </div>
+        <div class="dishes-grid">
+            <div class="dish-card">
+                <div class="dish-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80" alt="Tom Yum"
+                        class="dish-image">
+                </div>
+                <div class="dish-info">
+                    <h3 class="dish-name">TOM YUM</h3>
+                    <p class="dish-description">River prawns in aromatic lemongrass broth with galangal and kaffir lime
+                    </p>
+                    <p class="dish-price">850</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <div class="dish-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=800&q=80" alt="Green Curry"
+                        class="dish-image">
+                </div>
+                <div class="dish-info">
+                    <h3 class="dish-name">GREEN CURRY</h3>
+                    <p class="dish-description">Heritage recipe with coconut cream and hand-picked vegetables</p>
+                    <p class="dish-price">650</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <div class="dish-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=800&q=80" alt="Pad Thai"
+                        class="dish-image">
+                </div>
+                <div class="dish-info">
+                    <h3 class="dish-name">PAD THAI</h3>
+                    <p class="dish-description">Traditional rice noodles with jumbo river prawns and tamarind</p>
+                    <p class="dish-price">550</p>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <div class="dish-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=800&q=80" alt="Massaman"
+                        class="dish-image">
+                </div>
+                <div class="dish-info">
+                    <h3 class="dish-name">MASSAMAN</h3>
+                    <p class="dish-description">Wagyu beef in ancient spice blend with roasted peanuts</p>
+                    <p class="dish-price">1,500</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase -->
+    <section class="video-showcase" id="story">
+        <div class="video-content">
+            <div class="video-text">
+                <h2>OUR CRAFT</h2>
+                <p>Every dish begins with the finest ingredients, sourced daily from local farmers and fishermen who
+                    share our commitment to excellence.</p>
+                <p>Our chefs combine traditional techniques passed down through generations with contemporary precision,
+                    creating dishes that honor Thai culinary heritage while embracing modern sensibilities.</p>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source
+                        src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                        type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy">
+        <div class="philosophy-content">
+            <h2>PHILOSOPHY</h2>
+            <p>We believe in the purity of flavors, the beauty of simplicity, and the power of authentic ingredients.
+                Each element on your plate has been carefully considered, from the sourcing to the final presentation.
+            </p>
+            <p>Our approach is rooted in respect—for the ingredients, for the traditions, and for the craft of cooking
+                itself.</p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+        <div class="features">
+            <div class="feature">
+                <div class="feature-number">01</div>
+                <h3 class="feature-title">DAILY FRESH</h3>
+                <p class="feature-text">Ingredients sourced at dawn</p>
+            </div>
+            <div class="feature">
+                <div class="feature-number">02</div>
+                <h3 class="feature-title">HERITAGE</h3>
+                <p class="feature-text">20 years of expertise</p>
+            </div>
+            <div class="feature">
+                <div class="feature-number">03</div>
+                <h3 class="feature-title">PRECISION</h3>
+                <p class="feature-text">Crafted to perfection</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="reserve">
+        <a href="#" class="cta-button">RESERVE A TABLE</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">ARAYA</div>
+            <div class="footer-contact">
+                02-XXX-XXXX | INFO@ARAYA.COM
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Fade in on scroll
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.dish-card, .feature, .section-header').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 1s ease-out';
+            observer.observe(el);
+        });
+
+        // Parallax for hero video
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const heroVideo = document.querySelector('.hero-video');
+                    if (heroVideo && scrolled < window.innerHeight) {
+                        heroVideo.style.transform = `translateY(${scrolled * 0.4}px)`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+</body>
+
+</html>
