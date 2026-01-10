@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Portfolio 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00f3ff;
+        }
+
+        body {
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-cyber {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Neon Glow Effect */
+        .neon-border {
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 5px var(--neon-blue);
+        }
+
+        .neon-text-pink {
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            animation: glitch 1s linear infinite;
+        }
+
+        @keyframes glitch {
+
+            2%,
+            64% {
+                transform: translate(2px, 0) skew(0deg);
+            }
+
+            4%,
+            60% {
+                transform: translate(-2px, 0) skew(0deg);
+            }
+
+            62% {
+                transform: translate(0, 0) skew(5deg);
+            }
+        }
+
+        /* Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scanlines"></div>
+
+    <section class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <video autoplay muted loop playsinline
+            class="absolute z-0 w-auto min-w-full min-h-full max-w-none filter grayscale brightness-50 contrast-125">
+            <source
+                src="../assets/4253333-uhd_2160_4096_25fps.mp4"
+                type="video/mp4">
+        </video>
+
+        <div class="absolute z-10 w-full h-full bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
+        <div class="relative z-20 text-center px-4">
+            <h2 class="text-neon-blue font-cyber tracking-widest mb-2 opacity-80 uppercase">Accessing System...</h2>
+            <h1 class="text-6xl md:text-8xl font-cyber font-bold glitch mb-4" style="color: var(--neon-pink);">
+                CYBER <span class="text-white">USER</span>
+            </h1>
+            <p class="text-xl md:text-2xl font-light tracking-widest text-cyan-400 mb-8">FULL-STACK REBEL / UI ARCHITECT
+            </p>
+
+            <button
+                class="px-8 py-3 bg-transparent border-2 border-cyan-400 text-cyan-400 font-cyber hover:bg-cyan-400 hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(0,243,255,0.5)]">
+                INITIALIZE CONTACT
+            </button>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-6xl mx-auto">
+        <h3 class="font-cyber text-3xl mb-12 border-l-4 border-pink-500 pl-4">LATEST_MISSIONS</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div
+                class="group relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-cyan-500 transition-all">
+                <div class="h-48 bg-gray-800 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-60">
+                </div>
+                <div class="p-6">
+                    <h4 class="font-cyber text-xl text-cyan-400 mb-2">NEURAL NET V.1</h4>
+                    <p class="text-gray-400 mb-4">ระบบจัดการข้อมูลผ่านโครงข่ายประสาทเทียม
+                        พัฒนาด้วยเทคโนโลยีที่ถูกสั่งห้ามในเขตนอก</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs border border-pink-500 px-2 py-1 text-pink-500">REACT</span>
+                        <span class="text-xs border border-cyan-500 px-2 py-1 text-cyan-500">NODE.JS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="group relative overflow-hidden bg-gray-900 border border-gray-800 hover:border-pink-500 transition-all">
+                <div class="h-48 bg-gray-800 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-60">
+                </div>
+                <div class="p-6">
+                    <h4 class="font-cyber text-xl text-pink-500 mb-2">VOID RUNNER</h4>
+                    <p class="text-gray-400 mb-4">โปรแกรมเจาะระบบความปลอดภัยขั้นสูง สำหรับการเข้าถึงข้อมูลที่ถูกเข้ารหัส
+                    </p>
+                    <div class="flex gap-2">
+                        <span class="text-xs border border-cyan-500 px-2 py-1 text-cyan-500">PYTHON</span>
+                        <span class="text-xs border border-pink-500 px-2 py-1 text-pink-500">WEB3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center border-t border-gray-900">
+        <p class="text-gray-600 font-cyber text-sm tracking-tighter">
+            © 2026 // ENCRYPTED_CONNECTION // ALL RIGHTS RESERVED
+        </p>
+    </footer>
+
+    <script>
+        // เพิ่มลูกเล่นพิมพ์ตัวอักษร (Typewriter) ง่ายๆ ด้วย JS
+        const title = document.querySelector('.glitch');
+        // คุณสามารถเพิ่ม Logic การสุ่ม Glitch หรือเสียงประกอบ (Sound Effect) ตรงนี้ได้
+    </script>
+</body>
+
+</html>
